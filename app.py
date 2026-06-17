@@ -129,6 +129,7 @@ def Deposit_Account():
             cls()
             print("Invalid Amount")
             time.sleep(0.8)
+            return
         cls()
         accounts[name]["balance_value"] =  accounts[name]["balance_value"] + deposit
         save_db()
