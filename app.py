@@ -46,7 +46,10 @@ def Create_Account():
             print("Account Alrady In DB")
             time.sleep(0.8)
             return
-        pin = random.randint(1000, 9999)
+        pin = random.randint(100, 99999)
+        if pin in accounts:
+            print("Same Pin Detected Try Again")
+            return
         balance = int(input("Balance:"))
         if balance < 0 :
             cls()
@@ -84,6 +87,7 @@ def Search_Account():
         cls()
         print("Empty!")
         time.sleep(0.8)
+        return
     name = str(input("Name:")).upper()
     if not name:
         cls()
@@ -101,6 +105,7 @@ def Search_Account():
         cls()
         print("Name Not Found In DB")
         time.sleep(0.8)
+        return
 
 def Deposit_Account():
     cls()
@@ -109,6 +114,7 @@ def Deposit_Account():
         cls()
         print("Empty!")
         time.sleep(0.8)
+        return
     name = str(input("Name:")).upper()
     if not name:
         cls()
@@ -132,6 +138,7 @@ def Deposit_Account():
         cls()
         print("Name Not Found In DB")
         time.sleep(0.8)
+        return
 
 def Withdraw_Account():
     cls()
@@ -140,6 +147,7 @@ def Withdraw_Account():
         cls()
         print("Empty!")
         time.sleep(0.8)
+        return
     name = str(input("Name:")).upper()
     if not name:
         cls()
@@ -154,7 +162,13 @@ def Withdraw_Account():
             cls()
             print("Invalid Amount")
             time.sleep(0.8)
+            return
         cls()
+        if accounts[name]["balance_value"] < Withdraw:
+            cls()
+            print("Cant Do That")
+            time.sleep(0.8)
+            return
         accounts[name]["balance_value"] =  accounts[name]["balance_value"] - Withdraw
         save_db()
         print(f"*Name:{name}\n*Account Number:{accounts[name]["account_value"]}\n*Balance:{accounts[name]["balance_value"]}\n===================")
@@ -163,6 +177,7 @@ def Withdraw_Account():
         cls()
         print("Name Not Found In DB")
         time.sleep(0.8)
+        return
 
 def Transfer_Money():
     cls()
@@ -171,6 +186,7 @@ def Transfer_Money():
         cls()
         print("Empty!")
         time.sleep(0.8)
+        return
     name = str(input("Name of your account:")).upper()
     reciver = str(input("Name of account Recive Money:")).upper()
     if not name:
@@ -184,6 +200,15 @@ def Transfer_Money():
         time.sleep(0.8)
         cls()
         amount = int(input("Amount to send"))
+        if amount <0:
+            print("Invalid Amount")
+            time.sleep(0.8)
+            return
+        if accounts[name]["balance_value"] < amount:
+            cls()
+            print("Cant Do That")
+            time.sleep(0.8)
+            return
         accounts[name]["balance_value"] = accounts[name]["balance_value"] - amount
         accounts[reciver]["balance_value"] = accounts[reciver]["balance_value"] + amount
         save_db()
@@ -196,6 +221,7 @@ def Transfer_Money():
         cls()
         print("check The Names!!!")
         time.sleep(0.8)
+        return
 
 def Delete_Account():
     cls()
@@ -204,6 +230,7 @@ def Delete_Account():
         cls()
         print("Empty!")
         time.sleep(0.8)
+        return
     name = str(input("Name:")).upper()
     if not name:
         cls()
@@ -222,6 +249,7 @@ def Delete_Account():
         cls()
         print("Name Not Found In DB")
         time.sleep(0.8)
+        return
 
 def Statistics():
     cls()
@@ -272,6 +300,12 @@ while True:
             Delete_Account()
         elif Choise == 8:
             Statistics()
+        elif Choise == 9:
+            cls()
+            print("See You Soon<3")
+            time.sleep(0.8)
+            cls()
+            sys.exit()
         else:
             cls()
             print("Wrong Value!")
